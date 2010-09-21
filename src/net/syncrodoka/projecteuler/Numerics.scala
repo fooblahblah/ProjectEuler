@@ -15,19 +15,36 @@ object Numerics {
 	}
 
 	def factors(n:Long) : List[Tuple2[Long, Long]] = {
-		def findFactors(n : Long, i : Long, factors : List[Tuple2[Long, Long]]) : List[Tuple2[Long, Long]] = {
-			println("findFactors " + n + ", " + i + ", " + factors)
+		def findFactors(n : Long, i : Long, factors : List[Tuple2[Long, Long]])
+			: List[Tuple2[Long, Long]] = {
 			if(i > 1)
 			{
-				if(n % i == 0) {
-					findFactors(n, i - 1, factors :+ (i, n / i))
+				val newFactors = if(n % i == 0) {
+					factors :+ (i, n / i)
 				} else {
-					findFactors(n, i - 1, factors)
+					factors
 				}
+				findFactors(n, i - 1, newFactors)
 			} else {
 				factors
 			}
 		}
 		findFactors(n, Math.sqrt(n).longValue, List())
+	}
+	
+	def sumOfSquares(n : Int) : Int = {
+		squares(1).take(n).sum
+	}
+	
+	def squareOfSums(n : Int) : Int = {
+		Math.pow(from(1).take(n).sum, 2).intValue
+	}
+	
+	def squares(n : Int) : Stream[Int] = {
+		Stream.cons(n * n, squares(n + 1))
+	}
+
+	def from(n : Int) : Stream[Int] = {
+		Stream.cons(n, from(n + 1))		
 	}
 }
