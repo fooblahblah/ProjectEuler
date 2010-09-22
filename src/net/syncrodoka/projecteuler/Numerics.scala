@@ -32,6 +32,13 @@ object Numerics {
 		findFactors(n, Math.sqrt(n).longValue, List())
 	}
 	
+	def gcd(n : Int, m : Int) : Int = {
+		val l = List(m, n)
+		val diff = l.max - l.min
+		if(diff > 0) gcd(l.min, diff) 
+		else l.max
+	}
+	
 	def sumOfSquares(n : Int) : Int = {
 		squares(1).take(n).sum
 	}
@@ -46,5 +53,9 @@ object Numerics {
 
 	def from(n : Int) : Stream[Int] = {
 		Stream.cons(n, from(n + 1))		
+	}
+	
+	def pythagoreanTriple(m : Int, n : Int) : (Int, Int, Int) = {
+		(m*m - n*n, 2*m*n, m*m + n*n)
 	}
 }
