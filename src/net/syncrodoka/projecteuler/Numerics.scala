@@ -15,19 +15,21 @@ object Numerics {
   }
 
   def factors(n: Long): List[Tuple2[Long, Long]] = {
-    def findFactors(n: Long, i: Long, factors: List[Tuple2[Long, Long]]): List[Tuple2[Long, Long]] = {
-      if (i > 1) {
-        val newFactors = if (n % i == 0) {
-          factors :+ (i, n / i)
-        } else {
-          factors
-        }
-        findFactors(n, i - 1, newFactors)
-      } else {
-        factors
-      }
+    def findFactors(n: Long, i: Long, factors: List[Tuple2[Long, Long]]): List[Tuple2[Long, Long]] = i match {
+    	case i if i > 0 && n % i == 0 => findFactors(n, i - 1, factors :+ (i, n / i))
+    	case i if i > 0 => findFactors(n, i - 1, factors)
+    	case _ => factors
     }
     findFactors(n, Math.sqrt(n).longValue, List())
+  }
+
+  def factors(n: BigInt): List[Tuple2[BigInt, BigInt]] = {
+    def findFactors(n: BigInt, i: BigInt, factors: List[Tuple2[BigInt, BigInt]]): List[Tuple2[BigInt, BigInt]] = i match {
+    	case i if i > 0 && n % i == 0 => findFactors(n, i - 1, factors :+ (i, n / i))
+    	case i if i > 0 => findFactors(n, i - 1, factors)
+    	case _ => factors
+    }
+    findFactors(n, BigInt.apply(Math.sqrt(n.toDouble).toLong), List())
   }
 
   def gcd(n: Int, m: Int): Int = {
@@ -54,6 +56,10 @@ object Numerics {
   }
 
   def from(n: Long): Stream[Long] = {
+    Stream.cons(n, from(n + 1))
+  }
+
+  def from(n: BigInt): Stream[BigInt] = {
     Stream.cons(n, from(n + 1))
   }
 
