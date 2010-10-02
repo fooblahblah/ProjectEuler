@@ -47,8 +47,9 @@ object Problem11 {
 
     def maxDiagonal(n: List[List[Int]], right: Boolean = true): Int = {
     	def buildProduct(m: List[Int], i: Int = 0, j: Int = 1): Int = {
+    		val w = width - win
     		m match {
-    			case h :: t if j <= width - win + 1 && ((right && i <= width - win) || (!right && i >= win - 1)) =>
+    			case h :: t if j <= w + 1 && ((right && i <= w) || (!right && i >= win - 1)) =>
     				val c = if(right) 1 else -1
     				val p = (List(h) ++ (1 until win).map(k => n.apply(j + k - 1)(i + (k * c)))).product
     				(p :: buildProduct(t, i + 1, j) :: Nil).max
