@@ -65,9 +65,15 @@ object Numerics {
 
   def primes(k : Long) : Seq[Long] = {
 	  (2L to k).filterNot(n => (2L until Math.sqrt(0.5 + n).ceil.longValue).exists(m => n % m == 0))
-}
+  }
 
   def pythagoreanTriple(m: Int, n: Int): (Int, Int, Int) = {
     ((m * m) - (n * n), 2 * m * n, (m * m) + (n * n))
+  }
+  
+  def hailstone(n: Long): Stream[Long] = n match {
+	  case 1 => Stream.cons(1, Stream.empty)
+	  case n if n % 2 == 0 => Stream.cons(n, hailstone(n / 2))
+	  case _ => Stream.cons(n, hailstone((3 * n) + 1))
   }
 }
